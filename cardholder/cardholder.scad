@@ -86,11 +86,15 @@ module cardholder(
                     visibility  = 0.3
                  ) { 
 
-    // rozmery prihradky
+    // rozmery jedne prihradky
     vyska_urovne        = (1-visibility) * size[0];
-    vnitrni_velikost    = [ size[1], size[2], vyska_urovne ];
 
-    celkova_velikost    = vnitrni_velikost + 2*(thickeness+spacing)*[1,1,0] + [0,0,spacing];
+    vnitrni_velikost    = [ size[1], size[2], vyska_urovne ];
+    celkova_velikost    = vnitrni_velikost + 2*(thickeness+spacing)*[1,1,0] + spacing*[0,0,1];
+
+    // rozmery masky (kvuli zaoblenym rohum) alias celkova velikost cardholderu
+    maska_velikost      = celkova_velikost + (cards-1)*[ 0, celkova_velikost[1], delta ];
+    maska_pozice        = [ 0, (1-cards)*celkova_velikost[1], 0 ] + spacing*[1,1,0];
 
     // upravi celkovou pozici cardholderu
     translate([ 0-celkova_velikost[0]/2, 0-celkova_velikost[1], 0 ]) {
@@ -100,19 +104,21 @@ module cardholder(
             for ( i = [0:cards-1] ) {
                 translate([ 0, 0-i*celkova_velikost[1], 0 ]) {
                     prihradka( 
-                            celkova_velikost = celkova_velikost,
-                            vnitrni_velikost = vnitrni_velikost,
-                            spacing     = spacing,
-                            delta       = delta,
-                            uroven      = i
-                            );
+                                celkova_velikost = celkova_velikost,
+                                vnitrni_velikost = vnitrni_velikost,
+                                spacing     = spacing,
+                                delta       = delta,
+                                uroven      = i
+                             );
                 }
             }
+
             // maska -- zaoblene rohy
-            translate ( [spacing,(1-cards)*celkova_velikost[1]+spacing,0] ) {
+            translate ( maska_pozice ) {
                 minkowski() {
-                    cube( [ celkova_velikost[0], celkova_velikost[1]*cards, celkova_velikost[2]+(cards-1)*delta ] - spacing*[2,2,0]);
-                    sphere(spacing);
+                    // velikost zmensena o 2*spacing
+                    cube( maska_velikost - spacing*[2,2,0] );
+                    sphere( spacing );
                 }
             }
 
@@ -120,13 +126,14 @@ module cardholder(
     }
 }
 
-//cardholder( );
+//translate([0,100,]) cardholder( );
 cardholder( 
                 size        = [100,50,10],
                 spacing     = 10,
                 cards       = 4,
                 thickeness  = 10,
-                visibility  = 0.1
+                visibility  = 0.3,
+                delta       = 35
             );
 
 //prihradka( celkova_velikost=[451,100,700], vnitrni_velikost=[350,10,600], spacing=30, delta=100, uroven=1  );
