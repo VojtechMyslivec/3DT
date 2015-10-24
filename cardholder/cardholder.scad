@@ -54,17 +54,17 @@ module dira(
 
 // prihradka na jednu kartu s podstavcem
 module prihradka(
-                    celkova_velikost    = [ 25, 5, 30 ],
-                    vnitrni_velikost    = [ 21, 1, 29 ],
+                    blok_velikost    = [ 25, 5, 30 ],
+                    dira_velikost    = [ 21, 1, 29 ],
                     spacing     = 1,
                     thickness   = 1,
                     delta       = 10,
                     uroven      = 0
                 ) {
-    if ( celkova_velikost[2] > 0 || uroven != 0 ) { 
+    if ( blok_velikost[2] > 0 || uroven != 0 ) { 
         // posun diry oproti bloku
-        stred_X = ( celkova_velikost[0] - vnitrni_velikost[0] )/2;
-        stred_Y = ( celkova_velikost[1] - vnitrni_velikost[1] )/2;
+        stred_X = ( blok_velikost[0] - dira_velikost[0] )/2;
+        stred_Y = ( blok_velikost[1] - dira_velikost[1] )/2;
         posun = [ stred_X, stred_Y, thickness ];
         // celkova velikost podstavce
         podstavec = delta*uroven;
@@ -73,17 +73,17 @@ module prihradka(
         // rozdil 2 -- duta prihradka
         difference() {
             blok( 
-                    velikost    = celkova_velikost + [0,0,podstavec],
+                    velikost    = blok_velikost + [0,0,podstavec],
                     zaobleni    = spacing + thickness,
                     delta       = delta
                 );
 
             // dira
-            translate( [ 0, 0, podstavec ]) {
+            #translate( [ 0, 0, podstavec ]) {
                 translate( posun ) {
                     dira(
                             //  vyska je plus 1, aby byla dira videt v nahledu
-                            velikost    = vnitrni_velikost + [0,0,1],
+                            velikost    = dira_velikost + [0,0,1],
                             spacing     = spacing
                         );
                 }
@@ -94,34 +94,37 @@ module prihradka(
 }
 
 module drzak (
-                    celkova_velikost    = [ 25, 5, 30 ],
-                    vnitrni_velikost    = [ 21, 1, 29 ],
-                    thickness           = 3,
-                    spacing             = 1,
-                    cards               = 4,
-                    delta               = 25,
+                    blok_velikost   = [ 25, 5, 30 ],
+                    dira_velikost   = [ 21, 1, 29 ],
+                    thickness       = 3,
+                    spacing         = 1,
+                    cards           = 4,
+                    delta           = 25,
     ) {
     // celkove vnejsi zaobleni
     zaobleni    = spacing + thickness;
 
-    // rozmery masky -- vyska a rozestupy valcu
-    maska_vyska      =       celkova_velikost[2] + (cards-1)*delta;
-    maska_rozestup_X =       celkova_velikost[0] - 2*zaobleni;
-    maska_rozestup_Y = cards*celkova_velikost[1] - 2*zaobleni;
-    maska_pozice     = zaobleni*[1,1,0] - [ 0, (cards-1)*celkova_velikost[1], 0 ]; 
+    // posun dalsi prihradky -- velikost - thickness
+    posun_prihradky_Y = blok_velikost[1]-thickness;
+
+    // rozmery masky (celkova velikost objektu) -- vyska a rozestupy valcu
+    maska_vyska      = blok_velikost[2] + (cards-1)*delta;
+    maska_rozestup_X = blok_velikost[0] - 2*zaobleni;
+    maska_rozestup_Y = cards*posun_prihradky_Y + thickness - 2*zaobleni;
+    maska_pozice     = zaobleni*[1,1,0] - [ 0, (cards-1)*posun_prihradky_Y, 0 ]; 
 
     intersection() { 
         // pro kazdou kartu vygeneruje prihradku vlastnim modulem
         for ( i = [0:cards-1] ) {
-            translate([ 0, 0-i*celkova_velikost[1], 0 ]) {
+            translate([ 0, 0-i*posun_prihradky_Y, 0 ]) {
                 prihradka( 
-                        celkova_velikost = celkova_velikost,
-                        vnitrni_velikost = vnitrni_velikost,
-                        spacing          = spacing,
-                        thickness        = thickness,
-                        delta            = delta,
-                        uroven           = i
-                        );
+                            blok_velikost   = blok_velikost,
+                            dira_velikost   = dira_velikost,
+                            spacing         = spacing,
+                            thickness       = thickness,
+                            delta           = delta,
+                            uroven          = i
+                         );
             }
         }
 
@@ -159,36 +162,41 @@ module cardholder(
             if ( delta < 0 ) {
                 // diky oprave otoceni se objekt otoci, kdyz je znovu zavolan
                 //rotate([0,0,180])
+                //translate(-[0,0,thickness + spacing + (1-cards)*delta])
                 cardholder( size, thickness, spacing, cards, -delta, visibility );
             }
             else {
-                spacing     =   spacing > 0 ?   spacing: 0;
-                thickness   = thickness > 0 ? thickness: 0;
-                // celkove vnejsi zaobleni
-                zaobleni    = spacing + thickness;
-                // uprava zadani
-                //delta       = delta + spacing;
-
+                // okrajove hodnoty
+                spacing         =   spacing > 0 ?   spacing: 0;
+                thickness       = thickness > 0 ? thickness: 0;
                 viditelnost_max =      ( visibility > 1 ) ? 1 :      visibility;
                 viditelnost     = ( viditelnost_max < 0 ) ? 0 : viditelnost_max;
+
+                // celkove vnejsi zaobleni
+                zaobleni    = spacing + thickness;
+
                 // rozmery jedne prihradky
-                vnitrni_velikost    = [ size[1], size[2], (1-viditelnost) * size[0] + spacing ];
-                celkova_velikost    = vnitrni_velikost + 2*zaobleni*[1,1,0] + [0,0,thickness];
+                dira_velikost   = [ size[1], size[2], (1-viditelnost) * size[0] + spacing ];
+                blok_velikost   = dira_velikost + 2*zaobleni*[1,1,0] + [0,0,thickness];
 
                 // oprava pozice dle zadani
-                oprava_pozice = -1/2*[ celkova_velikost[0], (2-cards)*celkova_velikost[1], 0 ];
+                oprava_pozice_X = -1/2*blok_velikost[0];
+                // pro liche je y jeste posunuta
+                oprava_pozice_Y = (blok_velikost[1]-thickness)*(cards-2)/2 - thickness + ( (cards % 2) ? thickness/2 : 0 );
+                oprava_pozice   = [ oprava_pozice_X, oprava_pozice_Y, 0 ];
+
                 translate( oprava_pozice ) {
                     // demo karta
                     %translate( zaobleni*[1,1,1] )
                         karta( size=size );
 
                     drzak(
-                            celkova_velikost    = celkova_velikost,
-                            vnitrni_velikost    = vnitrni_velikost,
-                            thickness           = thickness,
-                            spacing             = spacing,
-                            cards               = cards,
-                            delta               = delta
+                            blok_velikost   = blok_velikost,
+                            dira_velikost   = dira_velikost,
+                            thickness       = thickness,
+                            spacing         = spacing,
+                            cards           = cards,
+                            delta           = delta
                          );
                 }
             }
@@ -202,7 +210,7 @@ cardholder(
             cards       = 5,
             thickness   = 5,
             visibility  = 0.5,
-            delta       = 15
+            delta       = -15
           );
 
 //prihradka( celkova_velikost=[451,100,700], vnitrni_velikost=[350,10,600], spacing=30, delta=100, uroven=1  );
