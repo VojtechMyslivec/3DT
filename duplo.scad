@@ -106,7 +106,9 @@ module duplo(
 };
 
 
-duplo( 4, 2, 2 );
+duplo( 6, 2, 2, $fn=20 );
+//duplo( 4, 4, 1, $fn=20 );
+
 //for ( i=[1:8], j=[1:8] ) {
 //    if ( i>=j )
 //        translate([ (i-1)*120, (j-1)*120 ])
