@@ -182,7 +182,7 @@ module cardholder(
                 // oprava pozice dle zadani
                 oprava_pozice_X = -1/2*blok_velikost[0];
                 // pro liche je y jeste posunuta
-                oprava_pozice_Y = (blok_velikost[1]-thickness)*(cards-2)/2 - thickness + ( (cards % 2) ? thickness/2 : 0 );
+                oprava_pozice_Y = (blok_velikost[2]-thickness)*(cards-2)/2 - thickness + thickness/2;
                 oprava_pozice   = [ oprava_pozice_X, oprava_pozice_Y, 0 ];
 
                 translate( oprava_pozice ) {
@@ -207,10 +207,10 @@ module cardholder(
 cardholder( 
             size        = [30,20,10],//[80,40,5],
             spacing     = 2,
-            cards       = 5,
+            cards       = 2,
             thickness   = 5,
             visibility  = 0.5,
-            delta       = -15
+            delta       = 15
           );
 
 //prihradka( celkova_velikost=[451,100,700], vnitrni_velikost=[350,10,600], spacing=30, delta=100, uroven=1  );
