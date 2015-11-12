@@ -79,7 +79,7 @@ module prihradka(
                 );
 
             // dira
-            #translate( [ 0, 0, podstavec ]) {
+            translate( [ 0, 0, podstavec ]) {
                 translate( posun ) {
                     dira(
                             //  vyska je plus 1, aby byla dira videt v nahledu
@@ -139,7 +139,7 @@ module drzak (
     }
 }
 
-module karta( size = [ 20, 10, 5 ] ) {
+module karta( size = [20,10,5] ) {
     color( "green" ) 
             cube( [ size[1], size[2], size[0] ] );
 }
@@ -182,7 +182,7 @@ module cardholder(
                 // oprava pozice dle zadani
                 oprava_pozice_X = -1/2*blok_velikost[0];
                 // pro liche je y jeste posunuta
-                oprava_pozice_Y = (blok_velikost[2]-thickness)*(cards-2)/2 - thickness + thickness/2;
+                oprava_pozice_Y = -blok_velikost[1] + (cards*(blok_velikost[1]-thickness) + thickness)/2; 
                 oprava_pozice   = [ oprava_pozice_X, oprava_pozice_Y, 0 ];
 
                 translate( oprava_pozice ) {
@@ -207,12 +207,14 @@ module cardholder(
 cardholder( 
             size        = [30,20,10],//[80,40,5],
             spacing     = 2,
-            cards       = 2,
+            cards       = 5,
             thickness   = 5,
             visibility  = 0.5,
             delta       = 15
           );
 
 //prihradka( celkova_velikost=[451,100,700], vnitrni_velikost=[350,10,600], spacing=30, delta=100, uroven=1  );
+
+
 
 
