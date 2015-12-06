@@ -153,6 +153,8 @@ module cardholder(
                     visibility  = 0.3
         ) { 
 
+    // kvuli osklivemu testu
+    size = concat( size, 0 );
     // TODO kontrola, ze size je vektor alespon 2 hodnot. 
     if ( size[0] > 0 && size[1] > 0 && size[2] >= 0 && cards > 0 ) {
 
@@ -205,7 +207,7 @@ module cardholder(
 
 //translate([0,100,0]) cardholder( );
 cardholder( 
-            size        = [30,20,10],//[80,40,5],
+            size        = [30,20,2],//[80,40,5],
             spacing     = 2,
             cards       = 5,
             thickness   = 5,
