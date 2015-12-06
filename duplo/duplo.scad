@@ -21,12 +21,13 @@ module cudliky(
                 pocet_x     = 10,
                 pocet_y     = 5,
                 r           = 3,
+                tloustka    = 1,
                 h           = 1,
                 rozestup    = 4
         ) {
     difference() {
-        valce( pocet_x, pocet_y, r  , h  , rozestup );
-        valce( pocet_x, pocet_y, r-1, h+1, rozestup );
+        valce( pocet_x, pocet_y, r,          h,   rozestup );
+        valce( pocet_x, pocet_y, r-tloustka, h+1, rozestup );
     }
 }
 
@@ -160,9 +161,9 @@ module duplo(
     pin_radius   = 9.35/2;
     pin_height   = 14.2 - layer_height;
     pin_distance = 25.35 - pin_radius*2;
-    wall_thick   = 2;
-    zasek_thick  = 3.3;
-    stred_radius = 13.15/2;
+    wall_thick   = 1;
+    zasek_thick  = 3;
+    stred_radius = 13.35/2;
     // tloustka podlozky (num_z==0)
     podlozka_thick = wall_thick;
 
@@ -173,18 +174,15 @@ module duplo(
 
     pozice_z    = 0-kostka_z;
     pozice      = [ 0, 0, pozice_z ];
-    // oprava pro num_z=0
-
-    vyztuha_tloustka    = 1.5;
-    vyztuha_vyska       = (num_z-1)*layer_height;
 
     // cudliky -------------------------------------------------------
     if ( !smooth ) {
-        translate( pin_distance/2 * [ 1, 1, 0 ] )
+        translate( pin_distance/2 * [1,1,0] )
             cudliky(
                     pocet_x     = num_x,
                     pocet_y     = num_y,
                     r           = pin_radius,
+                    tloustka    = wall_thick,
                     h           = pin_height,
                     rozestup    = pin_distance
                 );
@@ -215,8 +213,8 @@ module duplo(
                              pocet_y    = num_y,
                              kostka_x   = kostka_x,
                              kostka_y   = kostka_y,
-                             tloustka   = vyztuha_tloustka,
-                             vyska      = vyztuha_vyska,
+                             tloustka   = wall_thick,
+                             vyska      = (num_z-1)*layer_height,
                              vzdalenost = pin_distance
                            );
                 // ---------------------------------------------------
@@ -228,7 +226,7 @@ module duplo(
                 valce(
                         pocet_x  = num_x-1,
                         pocet_y  = num_y-1,
-                        r        = stred_radius-1,
+                        r        = stred_radius-wall_thick,
                         h        = kostka_z - wall_thick + 1,
                         rozestup = pin_distance 
                     );
@@ -260,16 +258,5 @@ module duplo(
     // ---------------------------------------------------------------
 };
 
-
-//intersection() {
-//translate([20,-30,-20])cube ([100,100,100]);
-//
-duplo( 4, 8, 2, $fn=10 );
-//}
-
-//for ( i=[1:8], j=[1:8] ) {
-//    if ( i>=j )
-//        translate([ (i-1)*120, (j-1)*120 ])
-//            duplo( i, j );
-//}
+duplo( 4, 4, 1, $fn=50 );
 
