@@ -1,3 +1,15 @@
+
+module zub( delka, sirka, vyska, uhel ) {
+    translate([delka/2,0,0])
+        rotate([ 0, -uhel, 0 ]) {
+            cube( [ delka, sirka, vyska ], center=true );
+            translate([delka/2,0,0])
+                cylinder( d=sirka, h=vyska, center=true );
+        }
+
+}
+
+
 module gear(
     r1          = 50,
     r2          = 40,
@@ -5,30 +17,39 @@ module gear(
     pocet_zubu  = 20,
     sirka_zubu  = 5,
     delka_zubu  = 10,
-    hridel      = 10,
-    oriznuty    = true
-)  {
-    zub = r1 + delka_zubu;
+    vyska_zubu  = 8,
+    hridel      = 10
+) {
+    rozdilR = r1-r2;
+    zub     = (r1+r2)/2 + delka_zubu - sirka_zubu/2;
+    uhel    = 90-atan( h/rozdilR );
+    pseudoVyska = 4*(sqrt( rozdilR*rozdilR + h*h ) + cos(uhel)*delka_zubu);
 
-    intersection() {
-        difference() {
-            union() {
-                cylinder( r1=r1, r2=r2, h=h, center=true );
+    difference() {
+        union() {
+            cylinder( r1=r1, r2=r2, h=h, center=true );
 
+            intersection() {
                 for( i=[0:pocet_zubu-1] ) {
-                    rotate([ 0, 0, i*360/pocet_zubu ])
-                        translate([zub/2, 0, 0 ])
-                            cube( [ zub, sirka_zubu, h ], center=true );
+                    rotate ([0,0,i*360/pocet_zubu])
+                        zub( zub, sirka_zubu, pseudoVyska, uhel );
                 }
+                // maska
+                cylinder( r=r1+r2, h=vyska_zubu, center=true );
             }
 
-            cube( [ hridel, hridel, h*2 ], center=true );
         }
-        if ( oriznuty ) 
-            cylinder( r1=r1+delka_zubu, r2=r2+delka_zubu, h=h, center=true );
+
+        cylinder( d = hridel, h =  h*2, center=true );
     }
 }
 
-//gear( r1 = 100, r2 = 50, h = 100, delka_zubu = 5, pocet_zubu = 10 );
-gear( r1 = 50, r2 = 30, h = 30  );
+gear(
+    r1 = 16.5/2, r2 = 15.2/2, h = 12.8, 
+    hridel = 6,
+    pocet_zubu = 12, delka_zubu = 3.55, sirka_zubu = 2.5, vyska_zubu = 12.5,
+    $fn=100
+);
+
+//gear();
 
