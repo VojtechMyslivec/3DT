@@ -142,7 +142,7 @@ module kostka(
 }
 
 /**
- * Lego duplo brick
+ * Lego (r) Duplo (r) compatible brick
  * @author Vojtech Myslivec
  * @param num_x pocet pinu na ose x
  * @param num_y pocet pinu na ose y
@@ -150,12 +150,12 @@ module kostka(
  * @param smooth jestli dil ma byt hladky nebo ne 
  */
 
-module duplo(
-                num_x   = 4,
-                num_y   = 2,
-                num_z   = 2,
-                smooth  = false
-            ) {
+module duplo_compatible(
+                            num_x   = 4,
+                            num_y   = 2,
+                            num_z   = 2,
+                            smooth  = false
+                       ) {
     // konstanty
     layer_height = 9.5;
     pin_radius   = 9.35/2;
@@ -258,5 +258,5 @@ module duplo(
     // ---------------------------------------------------------------
 };
 
-duplo( 4, 4, 1, $fn=50 );
+duplo_compatible( 4, 4, 1, $fn=50 );
 
