@@ -31,7 +31,7 @@ module hdd_holder(
     }
 
     // zaves ---------------------------------------------------------
-    velikostZaves   = [ zaves_max, zaves_sirka+sila, ramecekVelikost[2] ]; 
+    velikostZaves   = [ zaves_max, zaves_sirka+sila, ramecekVelikost[2] ];
     posunZaves      = (ramecekVelikost[0]-zaves_max)/2*[1,0,0] + ramecekVelikost[1]*[0,1,0];
 
     velikostVyrez   = [ zaves_vyrez*velikostZaves[0], velikostZaves[1], velikostZaves[2] ];
@@ -50,8 +50,8 @@ module hdd_holder(
         }
 }
 
-module hdd( 
-    hdd_velikost    = [ 112, 77.5, 19 ], 
+module hdd(
+    hdd_velikost    = [ 112, 77.5, 19 ],
     zaobleni        = 8
 ) {
     rozestup_x = hdd_velikost[0] - 2*zaobleni;
@@ -59,7 +59,7 @@ module hdd(
 
     translate([zaobleni,zaobleni,0])
         hull() {
-            for ( i=[0,1], j=[0,1] ) 
+            for ( i=[0,1], j=[0,1] )
                 translate([ i*rozestup_x, j*rozestup_y, 0 ])
                     cylinder( r=zaobleni, h=hdd_velikost[2] );
         }
@@ -71,4 +71,3 @@ hdd_holder( tloustka = tloustka, hdd_velikost = [ 114, 79, 19 ], zaves_sirka = 3
 
 translate(tloustka*[1,1,1])
     %hdd();
-

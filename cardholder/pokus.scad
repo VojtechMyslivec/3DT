@@ -1,4 +1,4 @@
-// 
+//
 // // dira na kartu
 // module dira(
 //             velikost    = [ 20, 5, 25 ],
@@ -11,7 +11,7 @@
 //                 cylinder( r=spacing, h=velikost[2] );
 //     }
 // }
-// 
+//
 // module dira1(
 //             velikost    = [ 20, 5, 25 ],
 //             spacing     = 1
@@ -46,6 +46,3 @@
 use <./cardholder.scad>;
 
 cardholder();
-
-
-

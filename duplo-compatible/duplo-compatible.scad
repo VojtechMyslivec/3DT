@@ -8,7 +8,7 @@ module valce(
                 h        = 3,
                 rozestup = 5
             ) {
-    if ( pocet_x > 0 && pocet_y > 0 ) 
+    if ( pocet_x > 0 && pocet_y > 0 )
         for( i=[0:pocet_x-1], j=[0:pocet_y-1] )
             translate([ i*rozestup, j*rozestup, 0 ])
                 cylinder( r=r, h=h );
@@ -34,7 +34,7 @@ module cudliky(
 
 /**
  * vytvori kazdou druhou cube( velikost ) s rozestupem (vektor),
- * tak, aby vysly symetricky dle celkoveho poctu 
+ * tak, aby vysly symetricky dle celkoveho poctu
  */
 module vyztuha(
                 velikost    = [10,2,5],
@@ -78,13 +78,13 @@ module vyztuhy(
 }
 
 /**
- * vytvori pocet krat cube( velikost ) s rozestupem (vektor) a jejich 
+ * vytvori pocet krat cube( velikost ) s rozestupem (vektor) a jejich
  * 'zrcadlovou' kopii v pozice_kopie
  */
 module zasek(
                 velikost    = [2,1,10],
                 rozestup    = [2,0,0],
-                pozice_kopie= [0,10,0], 
+                pozice_kopie= [0,10,0],
                 pocet       = 10
             ) {
     for( i=[0:pocet-1] )
@@ -109,7 +109,7 @@ module zaseky(
                 kostka_y    = 35
              ) {
     // podel x
-    translate([ (vzdalenost-sirka)/2, 0, 0 ]) 
+    translate([ (vzdalenost-sirka)/2, 0, 0 ])
         zasek(
                 velikost    = [ sirka, velikost, vyska ],
                 rozestup    = [ vzdalenost, 0, 0 ],
@@ -117,7 +117,7 @@ module zaseky(
                 pocet       = pocet_x
              );
     // podel y
-    translate([ 0, (vzdalenost-sirka)/2, 0 ]) 
+    translate([ 0, (vzdalenost-sirka)/2, 0 ])
         zasek(
                 velikost    = [ velikost, sirka, vyska ],
                 rozestup    = [ 0, vzdalenost, 0 ],
@@ -147,7 +147,7 @@ module kostka(
  * @param num_x pocet pinu na ose x
  * @param num_y pocet pinu na ose y
  * @param num_z vyska na ose z v jednotkach lega dupla, obycejny dil ma 2 jednotky
- * @param smooth jestli dil ma byt hladky nebo ne 
+ * @param smooth jestli dil ma byt hladky nebo ne
  */
 
 module duplo_compatible(
@@ -202,7 +202,7 @@ module duplo_compatible(
                             pocet_y  = num_y-1,
                             r        = stred_radius,
                             h        = kostka_z - wall_thick,
-                            rozestup = pin_distance 
+                            rozestup = pin_distance
                         );
                 // ---------------------------------------------------
 
@@ -228,7 +228,7 @@ module duplo_compatible(
                         pocet_y  = num_y-1,
                         r        = stred_radius-wall_thick,
                         h        = kostka_z - wall_thick + 1,
-                        rozestup = pin_distance 
+                        rozestup = pin_distance
                     );
             // -------------------------------------------------------
         }
@@ -259,4 +259,3 @@ module duplo_compatible(
 };
 
 duplo_compatible( 4, 4, 1, $fn=50 );
-

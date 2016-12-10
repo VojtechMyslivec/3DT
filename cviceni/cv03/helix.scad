@@ -41,4 +41,3 @@ module helix(
 
 //helix( h=10, s=10  );
 helix( );
-

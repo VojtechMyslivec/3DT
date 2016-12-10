@@ -1,4 +1,4 @@
-/* cardholder.scad 
+/* cardholder.scad
  *
  * Vypracovani ukolu z predmetu BI-3DT
  * Vojtech Myslivec, FIT CVUT v Praze, 2015
@@ -7,7 +7,7 @@
 
 
 // ramecek, se zaoblenym vrskem
-module blok( 
+module blok(
              velikost   = [ 30, 10, 35 ],
              zaobleni   = 1,
              delta      = 10
@@ -24,7 +24,7 @@ module blok(
             rozestup_X  = velikost[0] - 2*zaobleni;
             rozestup_Y  = velikost[1];
 
-            translate( pozice ) 
+            translate( pozice )
                 hull() {
                     for ( i=[0,1], j=[0,1] )
                         translate ( [ i*rozestup_X, -j*rozestup_Y, 0 ] )
@@ -61,7 +61,7 @@ module prihradka(
                     delta       = 10,
                     uroven      = 0
                 ) {
-    if ( blok_velikost[2] > 0 || uroven != 0 ) { 
+    if ( blok_velikost[2] > 0 || uroven != 0 ) {
         // posun diry oproti bloku
         stred_X = ( blok_velikost[0] - dira_velikost[0] )/2;
         stred_Y = ( blok_velikost[1] - dira_velikost[1] )/2;
@@ -72,7 +72,7 @@ module prihradka(
         // posunuti prihradky na danou uroven
         // rozdil 2 -- duta prihradka
         difference() {
-            blok( 
+            blok(
                     velikost    = blok_velikost + [0,0,podstavec],
                     zaobleni    = spacing + thickness,
                     delta       = delta
@@ -111,13 +111,13 @@ module drzak (
     maska_vyska      = blok_velikost[2] + (cards-1)*delta;
     maska_rozestup_X = blok_velikost[0] - 2*zaobleni;
     maska_rozestup_Y = cards*posun_prihradky_Y + thickness - 2*zaobleni;
-    maska_pozice     = zaobleni*[1,1,0] - [ 0, (cards-1)*posun_prihradky_Y, 0 ]; 
+    maska_pozice     = zaobleni*[1,1,0] - [ 0, (cards-1)*posun_prihradky_Y, 0 ];
 
-    intersection() { 
+    intersection() {
         // pro kazdou kartu vygeneruje prihradku vlastnim modulem
         for ( i = [0:cards-1] ) {
             translate([ 0, 0-i*posun_prihradky_Y, 0 ]) {
-                prihradka( 
+                prihradka(
                             blok_velikost   = blok_velikost,
                             dira_velikost   = dira_velikost,
                             spacing         = spacing,
@@ -140,7 +140,7 @@ module drzak (
 }
 
 module karta( size = [20,10,5] ) {
-    color( "green" ) 
+    color( "green" )
             cube( [ size[1], size[2], size[0] ] );
 }
 
@@ -151,11 +151,11 @@ module cardholder(
                     cards       = 4,
                     delta       = 25,
                     visibility  = 0.3
-        ) { 
+        ) {
 
     // kvuli osklivemu testu
     size = concat( size, 0 );
-    // TODO kontrola, ze size je vektor alespon 2 hodnot. 
+    // TODO kontrola, ze size je vektor alespon 2 hodnot.
     if ( size[0] > 0 && size[1] > 0 && size[2] >= 0 && cards > 0 ) {
 
         // oprava otoceni dle zadani
@@ -184,7 +184,7 @@ module cardholder(
                 // oprava pozice dle zadani
                 oprava_pozice_X = -1/2*blok_velikost[0];
                 // pro liche je y jeste posunuta
-                oprava_pozice_Y = -blok_velikost[1] + (cards*(blok_velikost[1]-thickness) + thickness)/2; 
+                oprava_pozice_Y = -blok_velikost[1] + (cards*(blok_velikost[1]-thickness) + thickness)/2;
                 oprava_pozice   = [ oprava_pozice_X, oprava_pozice_Y, 0 ];
 
                 translate( oprava_pozice ) {
@@ -206,7 +206,7 @@ module cardholder(
 }
 
 //translate([0,100,0]) cardholder( );
-cardholder( 
+cardholder(
             size        = [30,20,2],//[80,40,5],
             spacing     = 2,
             cards       = 5,
@@ -216,7 +216,3 @@ cardholder(
           );
 
 //prihradka( celkova_velikost=[451,100,700], vnitrni_velikost=[350,10,600], spacing=30, delta=100, uroven=1  );
-
-
-
-

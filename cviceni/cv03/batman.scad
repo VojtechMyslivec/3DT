@@ -27,5 +27,3 @@ module batman(
 
 //batman(150,50,120,10);
 batman();
-
-

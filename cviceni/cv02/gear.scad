@@ -10,7 +10,7 @@
  * @param tooth_count Počet zubů na ozubeném kolu po obvodu
  * @author Marek Žehra
  */
- 
+
 //#import("stls/gear.stl");
 
 module gear(
@@ -21,7 +21,7 @@ module gear(
     tooth_prot=5,
     tooth_count=20
 )  {
-    
+
     difference() {
         union(){
             translate([0,0,-gear_thickness/2])
@@ -32,7 +32,7 @@ module gear(
                             cube([2*tooth_prot,tooth_width,gear_thickness],center=true);
                 }
             }
-        
+
         cube(
             [center_hole_width,
              center_hole_width,
@@ -40,9 +40,7 @@ module gear(
             center=true
         );
     }
-    
 
-    
 }
 
 gear();

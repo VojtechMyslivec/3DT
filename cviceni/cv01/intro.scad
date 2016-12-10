@@ -69,11 +69,3 @@ module sisojd(size=12,amount=6) {
 
 sisojd(size=100,amount=6);
 */
-
-
-
-
-
-
-
-

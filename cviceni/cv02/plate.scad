@@ -10,8 +10,8 @@
  * @param h Výška sloupku na šroub
  * @author Miro Hrončok, Jakub Průša
  */
- 
-  
+
+
 //#import("stls/plate.stl");
 
 module plate(
@@ -24,7 +24,7 @@ module plate(
     h=3
 ) {
 
-    difference() {        
+    difference() {
 
         union() {
             translate([ -x/2, -y/2, 0 ])
@@ -32,10 +32,10 @@ module plate(
 
             for ( i=[1,-1], j=[1,-1] ) {
                 translate([i*(x/2-c),j*(y/2-c),z])
-                    cylinder( r=b, h=h );    
+                    cylinder( r=b, h=h );
             }
         }
-    
+
     for ( i=[1,-1], j=[1,-1] ) {
             translate([i*(x/2-c),j*(y/2-c),-z])
                 #cylinder( r=r, h=2*h+2*z );

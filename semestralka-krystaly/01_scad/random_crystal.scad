@@ -55,4 +55,3 @@ module random_crystal(
 //random_crystal( nthorns=20, rot=[-45,45], seg=[3,4] );
 
 random_crystal( );
-

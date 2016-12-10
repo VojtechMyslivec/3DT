@@ -1,10 +1,10 @@
 /** thorn
- * 
+ *
  *  This module creates a single crystal thorn pointing upwards
- *  
+ *
  *  height      total thorn height
  *  circumr     radius of thorn widest point
- *  seg         number of thorn segments 
+ *  seg         number of thorn segments
  *
  */
 module thorn(
@@ -24,4 +24,3 @@ module thorn(
 
 
 thorn( 25, 5, 6 );
-

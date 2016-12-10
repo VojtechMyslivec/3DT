@@ -2,14 +2,14 @@
 use <thorn.scad>
 
 /** crystal
- * 
+ *
  * This module creates a crystal made of thorns (from module thorn) according
  * to given parameters. Each thorn is rotated as well.
  *
  * thorns = [[[rotx, roty, rotz], height, circumr, seg], ...]
  *      [rotx, roty, rotz]      rotate vector
  *      height, circumr, seg    thorn parameters
- * 
+ *
  * thorns_example  = [[[0,0,0], 30, 3, 4], [[90,0,0], 25.5, 2.65, 7]];
  *
  */
@@ -28,4 +28,3 @@ crystal( [
             [ [   0,  90,   0 ],  47,  3, 6 ],
             [ [  90,   0,   0 ],  45,  3, 8 ]
          ] );
-

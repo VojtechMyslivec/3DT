@@ -45,11 +45,10 @@ module gear(
 }
 
 gear(
-    r1 = 16.5/2, r2 = 15.2/2, h = 12.8, 
+    r1 = 16.5/2, r2 = 15.2/2, h = 12.8,
     hridel = 6,
     pocet_zubu = 12, delka_zubu = 3.55, sirka_zubu = 2.5, vyska_zubu = 12.5,
     $fn=100
 );
 
 //gear();
-

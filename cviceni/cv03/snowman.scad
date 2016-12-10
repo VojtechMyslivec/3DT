@@ -32,4 +32,3 @@ module snowman(
 
 //snowman( balls=1, overlap=0.5, factor=1);
 snowman( );
-

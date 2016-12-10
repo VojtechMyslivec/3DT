@@ -8,7 +8,7 @@ module panev(
     delka       = 15
 
 ) {
-    
+
     pozice_zaobleni = [ delka+prumer2/2, 0, 0 ];
 
     difference() {
@@ -34,10 +34,8 @@ module panev(
         translate([ 0, 0, tloustka ])
             cylinder( d1=prumer1-tloustka, d2=prumer2-tloustka, h=vyska );
     }
-   
+
 
 }
 
 panev( $fn=50 );
-
-

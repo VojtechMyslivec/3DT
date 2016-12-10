@@ -33,7 +33,7 @@ module stromecek(
         // kmen --------------------------------------------
         color("brown")
             translate([0,0,-vyska/2])
-            cylinder( prumer=prumer/4, h=vyska/2 ); 
+            cylinder( prumer=prumer/4, h=vyska/2 );
     }
     // hvezda ----------------------------------------------
     if ( hvezda ) {
@@ -48,4 +48,3 @@ module stromecek(
 }
 
 stromecek( prumer=30, vyska=20, $fn=50, uroven=4, hvezda=true, ostatni=true );
-

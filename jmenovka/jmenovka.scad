@@ -40,4 +40,3 @@ scale(2)
     jmenovka("Myslivec");
 //translate([50,0,0])
 //    jmenovka( text="Kodýtek" );
-

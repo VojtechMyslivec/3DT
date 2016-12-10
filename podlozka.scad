@@ -27,4 +27,3 @@ module podlozka(
 }
 
 podlozka( $fn=100 );
-
