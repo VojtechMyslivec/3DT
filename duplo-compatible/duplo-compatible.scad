@@ -147,6 +147,7 @@ module kostka(
  * @param num_x pocet pinu na ose x
  * @param num_y pocet pinu na ose y
  * @param num_z vyska na ose z v jednotkach lega dupla, obycejny dil ma 2 jednotky
+ *              0 znamena, ze se jedna o podlozku
  * @param smooth jestli dil ma byt hladky nebo ne
  */
 
@@ -186,6 +187,7 @@ module duplo_compatible(
     // ---------------------------------------------------------------
 
     // vnitrek kostky ------------------------------------------------
+    if ( num_z != 0 ) {
         // rozdil: (plne valce + vyztuhy) - vnitrni (dute) valce
          difference() {
             union() {
@@ -238,14 +240,22 @@ module duplo_compatible(
                 kostka_x    = kostka_x,
                 kostka_y    = kostka_y
               );
+    }
 
     // ---------------------------------------------------------------
 
     // duta kostka ---------------------------------------------------
+    if ( num_z == 0 ) {
+        kostka(
+                velikost    = kostka_velikost,
+                tloustka    = podlozka_thick
+              );
+    } else {
         kostka(
                 velikost    = kostka_velikost,
                 tloustka    = wall_thick
               );
+    }
     // ---------------------------------------------------------------
 };
 
