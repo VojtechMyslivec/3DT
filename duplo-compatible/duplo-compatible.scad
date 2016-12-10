@@ -165,19 +165,16 @@ module duplo_compatible(
     zasek_thick  = 3;
     stred_radius = 13.35/2;
     // tloustka podlozky (num_z==0)
-    podlozka_thick = 3*wall_thick;
+    podlozka_thick = 2*wall_thick;
 
     kostka_x        = num_x * pin_distance;
     kostka_y        = num_y * pin_distance;
-    kostka_z        = num_z * layer_height;
-    kostka_velikost = [ kostka_x, kostka_y, ( kostka_z==0 ? podlozka_thick : kostka_z ) ];
-
-    pozice_z    = 0-kostka_z;
-    pozice      = [ 0, 0, pozice_z ];
+    kostka_z        = ( num_z == 0 ? podlozka_thick : num_z * layer_height );
+    kostka_velikost = [ kostka_x, kostka_y, kostka_z ];
 
     // cudliky -------------------------------------------------------
     if ( !smooth ) {
-        translate( pin_distance/2 * [1,1,0] )
+        translate( pin_distance/2 * [1,1,0] + [ 0, 0, kostka_z ])
             cudliky(
                     pocet_x     = num_x,
                     pocet_y     = num_y,
@@ -189,7 +186,6 @@ module duplo_compatible(
     // ---------------------------------------------------------------
 
     // vnitrek kostky ------------------------------------------------
-    translate( pozice ) {
         // rozdil: (plne valce + vyztuhy) - vnitrni (dute) valce
          difference() {
             union() {
@@ -243,16 +239,13 @@ module duplo_compatible(
                 kostka_y    = kostka_y
               );
 
-    }
     // ---------------------------------------------------------------
 
     // duta kostka ---------------------------------------------------
-    translate([ 0, 0, ( kostka_z==0 ? 0-podlozka_thick : pozice_z ) ]) {
         kostka(
                 velikost    = kostka_velikost,
                 tloustka    = wall_thick
               );
-    }
     // ---------------------------------------------------------------
 };
 
