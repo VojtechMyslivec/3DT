@@ -57,7 +57,7 @@ module vyztuhy(
                 pocet_y    = 5,
                 kostka_x   = 100,
                 kostka_y   = 55,
-                tloustka   = 10,
+                tloustka   = 1,
                 vyska      = 40,
                 vzdalenost = 10,
               ) {
@@ -100,7 +100,7 @@ module zasek(
  */
 module zaseky(
                 velikost    = 2,
-                sirka       = 3,
+                sirka       = 1,
                 vyska       = 10,
                 vzdalenost  = 3,
                 pocet_x     = 9,
@@ -161,11 +161,11 @@ module duplo_compatible(
     pin_radius   = 9.35/2;
     pin_height   = 14.2 - layer_height;
     pin_distance = 25.35 - pin_radius*2;
-    wall_thick   = 1;
+    wall_thick   = 2;
     zasek_thick  = 3;
     stred_radius = 13.35/2;
     // tloustka podlozky (num_z==0)
-    podlozka_thick = wall_thick;
+    podlozka_thick = 3*wall_thick;
 
     kostka_x        = num_x * pin_distance;
     kostka_y        = num_y * pin_distance;
@@ -182,7 +182,6 @@ module duplo_compatible(
                     pocet_x     = num_x,
                     pocet_y     = num_y,
                     r           = pin_radius,
-                    tloustka    = wall_thick,
                     h           = pin_height,
                     rozestup    = pin_distance
                 );
@@ -226,7 +225,7 @@ module duplo_compatible(
                 valce(
                         pocet_x  = num_x-1,
                         pocet_y  = num_y-1,
-                        r        = stred_radius-wall_thick,
+                        r        = stred_radius-1,
                         h        = kostka_z - wall_thick + 1,
                         rozestup = pin_distance
                     );
@@ -236,7 +235,6 @@ module duplo_compatible(
         // zaseky ----------------------------------------------------
         zaseky(
                 velikost    = zasek_thick,
-                sirka       = wall_thick,
                 vyska       = kostka_z,
                 vzdalenost  = pin_distance,
                 pocet_x     = num_x,
