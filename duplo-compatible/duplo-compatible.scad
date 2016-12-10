@@ -259,4 +259,4 @@ module duplo_compatible(
     // ---------------------------------------------------------------
 };
 
-duplo_compatible( 4, 4, 1, $fn=50 );
+duplo_compatible( 10, 12, 0, $fn=20 );
